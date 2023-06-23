@@ -14,7 +14,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { logout } from '../store/modules/userLogged';
+import { logout } from '../store/modules/userLoggedSlice';
 
 export interface SearchDispatch {
   requestSearch: (value: string) => void;

@@ -1,21 +1,31 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import RegisterTypes from '../../types/RegisterTypes';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const adapter = createEntityAdapter<RegisterTypes>({
-  selectId: item => item.username
+import { ApiResponse, ApiService } from '../../services/api.service';
+import RequestLoginTypes from '../../types/RequestLoginTypes';
+import { UserTypes } from '../../types/UserTypes';
+
+export const createUsersAction = createAsyncThunk('register/create', async (props: RequestLoginTypes) => {
+  const result = await ApiService.createUser(props);
+
+  return result;
 });
 
-export const { selectAll, selectById } = adapter.getSelectors((state: any) => state.register);
-
-const registerSlice = createSlice({
+const requestRegisterSlice = createSlice({
   name: 'register',
-  initialState: adapter.getInitialState(),
+  initialState: {} as UserTypes,
   reducers: {
-    addRegister: adapter.addOne,
-    addMany: adapter.addMany,
-    updateOne: adapter.updateOne
+    registerOff: state => {
+      state.id = '';
+    }
+  },
+  extraReducers(builder) {
+    builder.addCase(createUsersAction.fulfilled, (state, action: PayloadAction<ApiResponse>) => {
+      console.log(action.payload.data ?? {});
+
+      return action.payload.data ?? {};
+    });
   }
 });
 
-export const { addRegister, addMany, updateOne } = registerSlice.actions;
-export default registerSlice.reducer;
+export const { registerOff } = requestRegisterSlice.actions;
+export default requestRegisterSlice.reducer;

@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useAppDispatch } from '../store/hooks';
-import { deleteNote } from '../store/modules/userLogged';
+// import { deleteNote } from '../store/modules/userLogged';
 
 export interface StateModalProps {
   indexNote: number;
@@ -21,7 +21,7 @@ export default function DialogDelete(props: StateModalProps) {
   };
 
   const saveNote = () => {
-    dispatch(deleteNote(props.indexNote));
+    // dispatch(deleteNote(props.indexNote));
     props.setStateModalDelete(false);
     props.setStateModal(false);
     console.log('eu certo');

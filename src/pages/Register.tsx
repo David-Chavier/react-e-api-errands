@@ -2,14 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Avatar, Button, Grid, ListItemAvatar, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import RegisterTypes from '../types/RegisterTypes';
-import { addRegister, selectAll } from '../store/modules/registerSlice';
+// import RegisterTypes from '../types/RegisterTypes';
+
 import imgBase from '../images/imgBase.png';
+import { createAction } from '@reduxjs/toolkit';
+import RequestLoginTypes from '../types/RequestLoginTypes';
+import { createUsersAction, registerOff } from '../store/modules/registerSlice';
+import { RootState } from '../store';
+import { useDispatch } from 'react-redux';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const registerData = useAppSelector(selectAll);
+  const dispatch = useDispatch<any>();
 
   const [username, setUsername] = useState<string>('');
   const [enableRegister, setEnableRegister] = useState<boolean>(true);
@@ -28,22 +32,44 @@ const Register: React.FC = () => {
       setEnableRegister(true);
     }
   }, [username]);
-  console.log(username.length >= 3);
-  const setRegister = () => {
-    const emailExist = registerData.find(item => item.username === username);
 
-    if (password.length <= 4) {
+  // const listApi = async () => {
+  //   const result = await dispatch(
+  //     listTransactionsAction({
+  //       id: user.id,
+  //       type: TransactionType.Income
+  //     })
+  //   );
+
+  //   if (!result.payload.ok) {
+  //     if (result.payload.message === 'User not found.') {
+  //       navigate('/login');
+  //       return;
+  //     }
+
+  //     setErro(result.payload.message);
+  //   }
+
+  //   console.log(erro);
+  // };
+
+  const setRegister = async () => {
+    if (password.length < 8) {
       setalertErroPassword(true);
     } else if (password !== confirmPassord) {
       setAlertPasswordsMatch(true);
-    } else if (emailExist) {
-      setAlertPasswordsMatch(false);
-      setAlertEmailTested(true);
     } else {
-      const register: RegisterTypes = { username, password, notes: [] };
-      dispatch(addRegister(register));
-      setAlertRegistrationSuccess(true);
+      const register: RequestLoginTypes = { username, password };
+      const result = await dispatch(createUsersAction(register));
+
+      if (!result.payload.ok) {
+        setAlertPasswordsMatch(false);
+        setAlertEmailTested(true);
+      } else {
+        setAlertRegistrationSuccess(true);
+      }
     }
+    // dispatch(registerOff());
   };
 
   useEffect(() => {

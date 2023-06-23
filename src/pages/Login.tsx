@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Avatar,
@@ -15,16 +15,19 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { selectAll } from '../store/modules/registerSlice';
-import { login } from '../store/modules/userLogged';
+
+// import { login } from '../store/modules/userLogged';
 import imgBase from '../images/imgBase.png';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { loginAction } from '../store/modules/userLoggedSlice';
+import { RootState } from '../store';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state: RootState) => state.login);
 
-  const registeredUser = useAppSelector(state => selectAll(state));
+  // const registeredUser = useAppSelector(state => selectAll(state));
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassord] = useState<string>('');
@@ -39,15 +42,20 @@ const Login: React.FC = () => {
     event.preventDefault();
   };
 
-  const loginRequest = () => {
-    const userToLogin = registeredUser.find(item => item.username === username && item.password === password);
-    if (userToLogin) {
-      dispatch(login(userToLogin));
+  useEffect(() => {
+    if (user.id) {
       navigate('/home');
-    } else {
+      return;
+    }
+  }, [user]);
+
+  const loginRequest = () => {
+    const userToLogin = { username, password };
+    dispatch(loginAction(userToLogin));
+    console.log(user.id);
+    if (!user.id) {
       setAlertIncorrectCredentials(true);
     }
-    console.log(userToLogin);
   };
 
   const handleChange = () => {

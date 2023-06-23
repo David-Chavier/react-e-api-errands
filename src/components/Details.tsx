@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { TextField, Typography } from '@mui/material';
 import { useState } from 'react';
-import { editNote } from '../store/modules/userLogged';
+import { editNote } from '../store/modules/userLoggedSlice';
 import DialogConfirm from './DialogConfirm';
 import DialogDelete from './DialogDelete';
 
