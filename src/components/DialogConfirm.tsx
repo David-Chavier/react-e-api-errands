@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export interface StateModalProps {
-  indexNote: number;
+  indexNote: string;
   stateModalConfirm: boolean;
   setStateModalConfirm: (value: boolean) => void;
   editConfirm: () => void;

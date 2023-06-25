@@ -27,8 +27,6 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state: RootState) => state.login);
 
-  // const registeredUser = useAppSelector(state => selectAll(state));
-
   const [username, setUsername] = useState<string>('');
   const [password, setPassord] = useState<string>('');
 
@@ -42,8 +40,9 @@ const Login: React.FC = () => {
     event.preventDefault();
   };
 
+  console.log(user);
   useEffect(() => {
-    if (user.id) {
+    if (user.userId) {
       navigate('/home');
       return;
     }
@@ -52,8 +51,8 @@ const Login: React.FC = () => {
   const loginRequest = () => {
     const userToLogin = { username, password };
     dispatch(loginAction(userToLogin));
-    console.log(user.id);
-    if (!user.id) {
+    console.log(user.userId);
+    if (!user.userId) {
       setAlertIncorrectCredentials(true);
     }
   };

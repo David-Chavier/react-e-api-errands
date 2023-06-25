@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { ApiService } from '../../services/api.service';
 import ListErrandsTypes from '../../types/ListErrandsTypes';
-import ErrandsTypes from '../../types/ErrandsTypes';
+import { CreateErrandTypes, DeleleErrandTypes, ErrandsTypes, UpdateErrandtypes } from '../../types/ErrandsTypes';
 
 export const listErrandAction = createAsyncThunk('errands/list', async (props: ListErrandsTypes) => {
   const result = await ApiService.listErrands(props);
@@ -10,23 +10,47 @@ export const listErrandAction = createAsyncThunk('errands/list', async (props: L
   return result;
 });
 
+export const createErrandAction = createAsyncThunk('errands/create', async (props: CreateErrandTypes) => {
+  const result = await ApiService.createErrands(props);
+
+  return result;
+});
+
+export const updateErrandAction = createAsyncThunk('errands/update', async (props: UpdateErrandtypes) => {
+  const result = await ApiService.updateErrands(props);
+
+  return result;
+});
+
+export const deleteErrandAction = createAsyncThunk('errands/delete', async (props: DeleleErrandTypes) => {
+  const result = await ApiService.deleteErrands(props);
+
+  return result;
+});
+
 const requestErrandSlice = createSlice({
   name: 'errands',
   initialState: [] as ErrandsTypes[],
-  reducers: {
-    // logout: state => {
-    //   state.id = '';
-    //   state.username = '';
-    // }
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.addCase(listErrandAction.fulfilled, (state, action) => {
       console.log(action.payload.data ?? []);
 
       return action.payload.data ?? [];
     });
+
+    builder.addCase(createErrandAction.fulfilled, (state, action) => {
+      return action.payload.data ?? [];
+    });
+
+    builder.addCase(deleteErrandAction.fulfilled, (state, action) => {
+      return action.payload.data ?? [];
+    });
+
+    builder.addCase(updateErrandAction.fulfilled, (state, action) => {
+      return action.payload.data ?? [];
+    });
   }
 });
 
-// export const { logout } = requestLoginSlice.actions;
 export default requestErrandSlice.reducer;

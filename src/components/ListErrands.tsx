@@ -16,7 +16,7 @@ export interface SearchReceived {
 }
 
 const ListErrands: React.FC<SearchReceived> = ({ GetSearch }) => {
-  const loggedUser = useAppSelector(state => state.errand);
+  const selectedNote = useAppSelector(state => state.errand);
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
@@ -29,10 +29,15 @@ const ListErrands: React.FC<SearchReceived> = ({ GetSearch }) => {
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {openDialog && selectedItemId !== null && (
-        <CustomizedDialogs noteId={selectedItemId} setStateModal={setOpenDialog} stateModal={openDialog} />
+        <CustomizedDialogs
+          noteIndex={selectedItemId}
+          noteId={selectedNote[parseInt(selectedItemId)].errandId}
+          setStateModal={setOpenDialog}
+          stateModal={openDialog}
+        />
       )}
 
-      {loggedUser
+      {selectedNote
         .filter(item => item.description.includes(GetSearch))
         .map((value, index) => {
           const labelId = `checkbox-list-label-${value}`;

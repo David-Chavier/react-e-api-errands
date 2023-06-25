@@ -1,7 +1,7 @@
 export type UserTypes = {
-  id: string;
+  userId: string;
   username: string;
   password: string;
 };
 
-export type UserLoginTypes = Omit<UserTypes, 'id'>;
+export type UserLoginTypes = Omit<UserTypes, 'userId'>;

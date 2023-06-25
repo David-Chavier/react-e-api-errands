@@ -4,8 +4,9 @@ import { Button, Container, Grid, TextField } from '@mui/material';
 import ListErrands from '../components/ListErrands';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useNavigate } from 'react-router-dom';
-import { listErrandAction } from '../store/modules/errandSlice';
+import { createErrandAction, listErrandAction } from '../store/modules/errandSlice';
 import { UserTypes } from '../types/UserTypes';
+import { CreateErrandTypes, ErrandsTypes } from '../types/ErrandsTypes';
 
 // import { updateOne } from '../store/modules/registerSlice';
 
@@ -21,30 +22,28 @@ const Home: React.FC = () => {
   const [details, setDetails] = useState<string>('');
 
   const [stateSearch, setStateSearch] = React.useState<string>('');
-  console.log(stateSearch);
 
   useEffect(() => {
     if (!loggedUser.username) {
       navigate('/');
     }
     if (loggedUser) {
-      dispatch(listErrandAction({ id: loggedUser.id }));
+      dispatch(listErrandAction({ userId: loggedUser.userId }));
     }
-
-    console.log(loggedUser.id);
   }, []);
 
   const openDescription = () => {
     if (description.length > 0) {
-      // dispatch(addNote({ description, details }));
+      const errand: CreateErrandTypes = { userId: loggedUser.userId, description, details };
+      dispatch(createErrandAction(errand));
       setDescription('');
       setDetails('');
     }
   };
 
-  useEffect(() => {
-    // dispatch(updateOne({ id: loggedUser.username, changes: { notes: loggedUser.notes } }));
-  }, [loggedUser]);
+  // useEffect(() => {
+  //   // dispatch(updateOne({ id: loggedUser.username, changes: { notes: loggedUser.notes } }));
+  // }, [loggedUser]);
   return (
     <React.Fragment>
       <Grid sx={{ marginBottom: '14px' }}>

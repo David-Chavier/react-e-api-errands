@@ -10,9 +10,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { TextField, Typography } from '@mui/material';
 import { useState } from 'react';
-import { editNote } from '../store/modules/userLoggedSlice';
+
 import DialogConfirm from './DialogConfirm';
 import DialogDelete from './DialogDelete';
+import { updateErrandAction } from '../store/modules/errandSlice';
+import { UserTypes } from '../types/UserTypes';
+import { UpdateErrandtypes } from '../types/ErrandsTypes';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -54,6 +57,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 }
 
 export interface CustomizedDialogsProps {
+  noteIndex: string;
   noteId: string;
   stateModal: boolean;
   setStateModal: (value: boolean) => void;
@@ -61,11 +65,12 @@ export interface CustomizedDialogsProps {
 
 export default function CustomizedDialogs(props: CustomizedDialogsProps) {
   const dispatch = useAppDispatch();
+  const loggedUser = useAppSelector(state => state.login) as UserTypes;
 
-  const { noteId } = props;
-  const loggedUser = useAppSelector(state => state.login);
-  const noteIdNumber = parseInt(noteId);
-  const note = noteIdNumber > -1 ? loggedUser.notes[noteIdNumber] : null;
+  const { noteIndex } = props;
+  const selectedNote = useAppSelector(state => state.errand);
+  const noteIdNumber = parseInt(noteIndex);
+  const note = noteIdNumber > -1 ? selectedNote[noteIdNumber] : null;
 
   const [edit, setEdit] = useState<boolean>(true);
   const [editDescription, setEditDescription] = useState<string | undefined>(note?.description);
@@ -100,8 +105,13 @@ export default function CustomizedDialogs(props: CustomizedDialogsProps) {
   const editSaveNote = () => {
     setEdit(!edit);
     if (!edit) {
-      const editedNote = { description: editDescription, details: editDetails };
-      dispatch(editNote({ index: noteIdNumber, note: editedNote }));
+      const editedNote: UpdateErrandtypes = {
+        userId: loggedUser.userId,
+        errandId: props.noteId,
+        description: editDescription,
+        details: editDetails
+      };
+      dispatch(updateErrandAction(editedNote));
     }
     props.setStateModal(false);
   };
@@ -113,13 +123,13 @@ export default function CustomizedDialogs(props: CustomizedDialogsProps) {
           <DialogConfirm
             stateModalConfirm={openModalConfirm}
             setStateModalConfirm={setOpenModalConfirm}
-            indexNote={noteIdNumber}
+            indexNote={props.noteId}
             editConfirm={editSaveNote}
           />
         )}
         {openModalDelete && (
           <DialogDelete
-            indexNote={noteIdNumber}
+            indexNote={props.noteId}
             stateModalDelete={openModalDelete}
             setStateModalDelete={setOpenModalDelete}
             setStateModal={handleClose}

@@ -33,26 +33,6 @@ const Register: React.FC = () => {
     }
   }, [username]);
 
-  // const listApi = async () => {
-  //   const result = await dispatch(
-  //     listTransactionsAction({
-  //       id: user.id,
-  //       type: TransactionType.Income
-  //     })
-  //   );
-
-  //   if (!result.payload.ok) {
-  //     if (result.payload.message === 'User not found.') {
-  //       navigate('/login');
-  //       return;
-  //     }
-
-  //     setErro(result.payload.message);
-  //   }
-
-  //   console.log(erro);
-  // };
-
   const setRegister = async () => {
     if (password.length < 8) {
       setalertErroPassword(true);

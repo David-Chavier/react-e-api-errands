@@ -3,17 +3,19 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useAppDispatch } from '../store/hooks';
-// import { deleteNote } from '../store/modules/userLogged';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { deleteErrandAction } from '../store/modules/errandSlice';
+import { UserTypes } from '../types/UserTypes';
 
 export interface StateModalProps {
-  indexNote: number;
+  indexNote: string;
   stateModalDelete: boolean;
   setStateModalDelete: (value: boolean) => void;
   setStateModal: (value: boolean) => void;
 }
 
 export default function DialogDelete(props: StateModalProps) {
+  const loggedUser = useAppSelector(state => state.login) as UserTypes;
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
@@ -21,7 +23,9 @@ export default function DialogDelete(props: StateModalProps) {
   };
 
   const saveNote = () => {
-    // dispatch(deleteNote(props.indexNote));
+    const errandDelete = { userId: loggedUser.userId, errandId: props.indexNote.toString() };
+    console.log(errandDelete);
+    dispatch(deleteErrandAction(errandDelete));
     props.setStateModalDelete(false);
     props.setStateModal(false);
     console.log('eu certo');

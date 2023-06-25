@@ -1,5 +1,4 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
 import { ApiResponse, ApiService } from '../../services/api.service';
 import RequestLoginTypes from '../../types/RequestLoginTypes';
 import { UserTypes } from '../../types/UserTypes';
@@ -15,7 +14,7 @@ const requestRegisterSlice = createSlice({
   initialState: {} as UserTypes,
   reducers: {
     registerOff: state => {
-      state.id = '';
+      state.userId = '';
     }
   },
   extraReducers(builder) {

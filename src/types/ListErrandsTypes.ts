@@ -1,5 +1,5 @@
 type ListErrandsTypes = {
-  id: string;
+  userId: string;
 };
 
 export default ListErrandsTypes;
