@@ -28,6 +28,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export interface DialogTitleProps {
   id: string;
+
   children?: React.ReactNode;
   onClose: () => void;
 }
@@ -57,6 +58,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 }
 
 export interface CustomizedDialogsProps {
+  getIsArchive: string;
   noteIndex: string;
   noteId: string;
   stateModal: boolean;
@@ -77,6 +79,7 @@ export default function CustomizedDialogs(props: CustomizedDialogsProps) {
   const [editDetails, setEditDetails] = useState<string | undefined>(note?.details);
   const [openModalConfirm, setOpenModalConfirm] = useState<boolean>(false);
   const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
+  const [switchMode, setSwitchMode] = useState<string>('false');
 
   if (!note) {
     return null;
@@ -94,25 +97,42 @@ export default function CustomizedDialogs(props: CustomizedDialogsProps) {
     props.setStateModal(false);
   };
 
+  let changeName = 'archive';
+  if (props.getIsArchive === 'true') {
+    changeName = 'unarchive';
+  } else if (props.getIsArchive === 'false') {
+    changeName = 'archive';
+  }
+
   const dialogConfirm = () => {
-    if (note.description === editDescription && note.details === editDetails) {
+    if (note.description === editDescription && note.details === editDetails && note.isArchived === switchMode) {
       props.setStateModal(false);
     } else {
       setOpenModalConfirm(!openModalConfirm);
     }
   };
 
+  const changeArchiveMode = () => {
+    if (props.getIsArchive === 'true') {
+      setSwitchMode('false');
+    } else if (props.getIsArchive === 'false') {
+      setSwitchMode('true');
+    }
+  };
+
   const editSaveNote = () => {
     setEdit(!edit);
-    if (!edit) {
-      const editedNote: UpdateErrandtypes = {
-        userId: loggedUser.userId,
-        errandId: props.noteId,
-        description: editDescription,
-        details: editDetails
-      };
-      dispatch(updateErrandAction(editedNote));
-    }
+
+    const editedNote: UpdateErrandtypes = {
+      userId: loggedUser.userId,
+      errandId: props.noteId,
+      description: editDescription,
+      details: editDetails,
+      isArchived: props.getIsArchive,
+      archive: switchMode
+    };
+    dispatch(updateErrandAction(editedNote));
+
     props.setStateModal(false);
   };
 
@@ -163,6 +183,9 @@ export default function CustomizedDialogs(props: CustomizedDialogsProps) {
           )}
         </DialogContent>
         <DialogActions>
+          <Button autoFocus onClick={changeArchiveMode} sx={{ color: '#ff4440' }}>
+            {changeName}
+          </Button>
           <Button autoFocus onClick={deleteNote} sx={{ color: '#ff4440' }}>
             Delete
           </Button>

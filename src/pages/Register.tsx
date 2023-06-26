@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Avatar, Button, Grid, ListItemAvatar, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-// import RegisterTypes from '../types/RegisterTypes';
-
 import imgBase from '../images/imgBase.png';
-import { createAction } from '@reduxjs/toolkit';
 import RequestLoginTypes from '../types/RequestLoginTypes';
-import { createUsersAction, registerOff } from '../store/modules/registerSlice';
-import { RootState } from '../store';
+import { createUsersAction } from '../store/modules/registerSlice';
 import { useDispatch } from 'react-redux';
 
 const Register: React.FC = () => {
@@ -49,7 +44,6 @@ const Register: React.FC = () => {
         setAlertRegistrationSuccess(true);
       }
     }
-    // dispatch(registerOff());
   };
 
   useEffect(() => {

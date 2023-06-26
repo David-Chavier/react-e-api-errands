@@ -13,9 +13,10 @@ import CustomizedDialogs from './Details';
 
 export interface SearchReceived {
   GetSearch: string;
+  getIsArchived: string;
 }
 
-const ListErrands: React.FC<SearchReceived> = ({ GetSearch }) => {
+const ListErrands: React.FC<SearchReceived> = ({ GetSearch, getIsArchived }) => {
   const selectedNote = useAppSelector(state => state.errand);
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -34,6 +35,7 @@ const ListErrands: React.FC<SearchReceived> = ({ GetSearch }) => {
           noteId={selectedNote[parseInt(selectedItemId)].errandId}
           setStateModal={setOpenDialog}
           stateModal={openDialog}
+          getIsArchive={getIsArchived}
         />
       )}
 

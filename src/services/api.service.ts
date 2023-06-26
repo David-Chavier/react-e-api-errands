@@ -47,7 +47,7 @@ export class ApiService {
 
   public static async listErrands(props: ListErrandsTypes): Promise<ApiResponse> {
     try {
-      const result = await api.get(`/user/${props.userId}/errand`);
+      const result = await api.get(`/user/${props.userId}/errand?isArchived=${props.isArchived}`);
       return result.data;
     } catch (err: any) {
       console.log(err.response.data);
@@ -57,7 +57,7 @@ export class ApiService {
 
   public static async createErrands(props: CreateErrandTypes): Promise<ApiResponse> {
     try {
-      const result = await api.post(`/user/${props.userId}/errand`, props);
+      const result = await api.post(`/user/${props.userId}/errand?isArchived=${props.isArchived}`, props);
       return result.data;
     } catch (err: any) {
       console.log(err.response.data);
@@ -67,7 +67,10 @@ export class ApiService {
 
   public static async updateErrands(props: UpdateErrandtypes): Promise<ApiResponse> {
     try {
-      const result = await api.put(`/user/${props.userId}/errand/${props.errandId}`, props);
+      const result = await api.put(
+        `/user/${props.userId}/errand/${props.errandId}?isArchived=${props.isArchived}`,
+        props
+      );
       return result.data;
     } catch (err: any) {
       console.log(err.response.data);

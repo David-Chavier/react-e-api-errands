@@ -15,8 +15,6 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-
-// import { login } from '../store/modules/userLogged';
 import imgBase from '../images/imgBase.png';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { loginAction } from '../store/modules/userLoggedSlice';
@@ -40,7 +38,6 @@ const Login: React.FC = () => {
     event.preventDefault();
   };
 
-  console.log(user);
   useEffect(() => {
     if (user.userId) {
       navigate('/home');
@@ -48,10 +45,10 @@ const Login: React.FC = () => {
     }
   }, [user]);
 
-  const loginRequest = () => {
+  const loginRequest = async () => {
     const userToLogin = { username, password };
-    dispatch(loginAction(userToLogin));
-    console.log(user.userId);
+    await dispatch(loginAction(userToLogin));
+
     if (!user.userId) {
       setAlertIncorrectCredentials(true);
     }

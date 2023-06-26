@@ -6,11 +6,8 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useNavigate } from 'react-router-dom';
 import { createErrandAction, listErrandAction } from '../store/modules/errandSlice';
 import { UserTypes } from '../types/UserTypes';
-import { CreateErrandTypes, ErrandsTypes } from '../types/ErrandsTypes';
-
-// import { updateOne } from '../store/modules/registerSlice';
-
-// import { addNote } from '../store/modules/userLogged';
+import { CreateErrandTypes } from '../types/ErrandsTypes';
+import ListErrandsTypes from '../types/ListErrandsTypes';
 
 const Home: React.FC = () => {
   const loggedUser = useAppSelector(state => state.login) as UserTypes;
@@ -22,32 +19,39 @@ const Home: React.FC = () => {
   const [details, setDetails] = useState<string>('');
 
   const [stateSearch, setStateSearch] = React.useState<string>('');
+  const [stateIsArchived, setStateIsArchived] = React.useState<string>('false');
 
   useEffect(() => {
-    if (!loggedUser.username) {
+    if (!loggedUser.userId) {
       navigate('/');
     }
     if (loggedUser) {
-      dispatch(listErrandAction({ userId: loggedUser.userId }));
+      const errand: ListErrandsTypes = {
+        userId: loggedUser.userId,
+        isArchived: stateIsArchived.toString()
+      };
+      dispatch(listErrandAction(errand));
     }
-  }, []);
+  }, [stateIsArchived]);
 
   const openDescription = () => {
     if (description.length > 0) {
-      const errand: CreateErrandTypes = { userId: loggedUser.userId, description, details };
+      const errand: CreateErrandTypes = {
+        userId: loggedUser.userId,
+        description,
+        details,
+        isArchived: stateIsArchived
+      };
       dispatch(createErrandAction(errand));
       setDescription('');
       setDetails('');
     }
   };
 
-  // useEffect(() => {
-  //   // dispatch(updateOne({ id: loggedUser.username, changes: { notes: loggedUser.notes } }));
-  // }, [loggedUser]);
   return (
     <React.Fragment>
       <Grid sx={{ marginBottom: '14px' }}>
-        <ResponsiveAppBar requestSearch={setStateSearch} />
+        <ResponsiveAppBar requestSearch={setStateSearch} requestIsArchived={setStateIsArchived} />
       </Grid>
 
       <Container>
@@ -80,7 +84,7 @@ const Home: React.FC = () => {
             </Grid>
           </Grid>
           <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-            <ListErrands GetSearch={stateSearch} />
+            <ListErrands GetSearch={stateSearch} getIsArchived={stateIsArchived} />
           </Grid>
         </Grid>
       </Container>

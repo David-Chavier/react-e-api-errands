@@ -18,6 +18,7 @@ import { logout } from '../store/modules/userLoggedSlice';
 
 export interface SearchDispatch {
   requestSearch: (value: string) => void;
+  requestIsArchived: (value: string) => void;
 }
 
 const Search = styled('div')(({ theme }) => ({
@@ -64,13 +65,27 @@ export default function PrimarySearchAppBar(props: SearchDispatch) {
   const loggedUser = useAppSelector(state => state.login);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [isArchived, setIsArchived] = React.useState<null | HTMLElement>(null);
 
+  const IsAchivedMenu = Boolean(isArchived);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const handleArchivedMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setIsArchived(event.currentTarget);
+  };
+
+  const archived = () => {
+    props.requestIsArchived('true');
+    setIsArchived(null);
+  };
+  const unarchived = () => {
+    props.requestIsArchived('false');
+    setIsArchived(null);
+  };
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -86,9 +101,38 @@ export default function PrimarySearchAppBar(props: SearchDispatch) {
     handleMobileMenuClose();
   };
 
+  // const setErrandArchived = () => {
+
+  // };
   const closeIconMenu = () => {
     setAnchorEl(null);
   };
+
+  const closeMenuIsArchived = () => {
+    setIsArchived(null);
+  };
+
+  const menuIsArchivedId = 'primary-search-account-menu';
+  const renderMenuIsArchived = (
+    <Menu
+      anchorEl={isArchived}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right'
+      }}
+      id={menuIsArchivedId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right'
+      }}
+      open={IsAchivedMenu}
+      onClose={closeMenuIsArchived}
+    >
+      <MenuItem onClick={archived}>Archived</MenuItem>
+      <MenuItem onClick={unarchived}>Unarchived</MenuItem>
+    </Menu>
+  );
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -137,7 +181,14 @@ export default function PrimarySearchAppBar(props: SearchDispatch) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+            onClick={handleArchivedMenuOpen}
+          >
             <MenuIcon />
           </IconButton>
           <Typography
@@ -187,6 +238,7 @@ export default function PrimarySearchAppBar(props: SearchDispatch) {
           </Box>
         </Toolbar>
       </AppBar>
+      {renderMenuIsArchived}
       {renderMobileMenu}
       {renderMenu}
     </Box>

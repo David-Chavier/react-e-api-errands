@@ -48,6 +48,7 @@ const requestErrandSlice = createSlice({
     });
 
     builder.addCase(updateErrandAction.fulfilled, (state, action) => {
+      console.log(action.payload.data ?? []);
       return action.payload.data ?? [];
     });
   }
