@@ -4,7 +4,7 @@ import ListErrandsTypes from '../types/ListErrandsTypes';
 import { CreateErrandTypes, DeleleErrandTypes, UpdateErrandtypes } from '../types/ErrandsTypes';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3333'
+  baseURL: 'https://david-chavier-api-transactions.onrender.com'
 });
 
 export interface ApiResponse {
@@ -80,7 +80,7 @@ export class ApiService {
 
   public static async deleteErrands(props: DeleleErrandTypes): Promise<ApiResponse> {
     try {
-      const result = await api.delete(`/user/${props.userId}/errand/${props.errandId}`);
+      const result = await api.delete(`/user/${props.userId}/errand/${props.errandId}?isArchived=${props.isArchived}`);
       return result.data;
     } catch (err: any) {
       console.log(err.response.data);

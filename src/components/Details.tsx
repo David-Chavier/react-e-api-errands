@@ -153,6 +153,7 @@ export default function CustomizedDialogs(props: CustomizedDialogsProps) {
             stateModalDelete={openModalDelete}
             setStateModalDelete={setOpenModalDelete}
             setStateModal={handleClose}
+            getIsArchive={props.getIsArchive}
           />
         )}
 

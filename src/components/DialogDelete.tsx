@@ -9,6 +9,7 @@ import { UserTypes } from '../types/UserTypes';
 
 export interface StateModalProps {
   indexNote: string;
+  getIsArchive: string;
   stateModalDelete: boolean;
   setStateModalDelete: (value: boolean) => void;
   setStateModal: (value: boolean) => void;
@@ -23,7 +24,11 @@ export default function DialogDelete(props: StateModalProps) {
   };
 
   const saveNote = () => {
-    const errandDelete = { userId: loggedUser.userId, errandId: props.indexNote.toString() };
+    const errandDelete = {
+      userId: loggedUser.userId,
+      errandId: props.indexNote.toString(),
+      isArchived: props.getIsArchive
+    };
     console.log(errandDelete);
     dispatch(deleteErrandAction(errandDelete));
     props.setStateModalDelete(false);

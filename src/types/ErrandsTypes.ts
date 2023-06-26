@@ -15,4 +15,4 @@ export type UpdateErrandtypes = {
   archive: string;
 };
 
-export type DeleleErrandTypes = Omit<UpdateErrandtypes, 'description' | 'details' | 'isArchived' | 'archive'>;
+export type DeleleErrandTypes = Omit<UpdateErrandtypes, 'description' | 'details' | 'archive'>;
