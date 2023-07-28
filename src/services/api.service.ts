@@ -4,7 +4,7 @@ import ListErrandsTypes from '../types/ListErrandsTypes';
 import { CreateErrandTypes, DeleleErrandTypes, UpdateErrandtypes } from '../types/ErrandsTypes';
 
 const api = axios.create({
-  baseURL: 'https://david-chavier-api-transactions.onrender.com'
+  baseURL: 'https://api-errands-postgresql.onrender.com'
 });
 
 export interface ApiResponse {
