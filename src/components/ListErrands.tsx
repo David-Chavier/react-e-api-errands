@@ -61,7 +61,7 @@ const ListErrands: React.FC<SearchReceived> = ({ GetSearch, getIsArchived }) => 
             >
               <ListItemButton role={undefined} dense>
                 <ListItemAvatar>
-                  <Avatar alt={`Avatar n°${imgBase}`} src={imgBase} />
+                  <Avatar alt="Avatar n°'/images/imgBase.png'" src="/images/imgBase.png" />
                 </ListItemAvatar>
                 <ListItemText id={labelId} primary={`(${index + 1}) ${value.description}`} />
               </ListItemButton>

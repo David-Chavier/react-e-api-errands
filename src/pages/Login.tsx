@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import imgBase from '../images/imgBase.png';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { loginAction } from '../store/modules/userLoggedSlice';
 import { RootState } from '../store';
@@ -70,8 +69,8 @@ const Login: React.FC = () => {
       <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
         <ListItemAvatar>
           <Avatar
-            alt={`Avatar n°${imgBase}`}
-            src={imgBase}
+            alt="Avatar n°'/images/imgBase.png'"
+            src="/images/imgBase.png"
             sx={{ height: '130px', width: '130px', marginTop: '25px' }}
           />
         </ListItemAvatar>

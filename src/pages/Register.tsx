@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Avatar, Button, Grid, ListItemAvatar, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import imgBase from '../images/imgBase.png';
 import RequestLoginTypes from '../types/RequestLoginTypes';
 import { createUsersAction } from '../store/modules/registerSlice';
 import { useDispatch } from 'react-redux';
@@ -71,8 +70,8 @@ const Register: React.FC = () => {
       <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
         <ListItemAvatar>
           <Avatar
-            alt={`Avatar n°${imgBase}`}
-            src={imgBase}
+            alt="Avatar n°'/images/imgBase.png'"
+            src="/images/imgBase.png"
             sx={{ height: '130px', width: '130px', marginTop: '25px' }}
           />
         </ListItemAvatar>
