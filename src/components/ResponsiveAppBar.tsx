@@ -101,9 +101,6 @@ export default function PrimarySearchAppBar(props: SearchDispatch) {
     handleMobileMenuClose();
   };
 
-  // const setErrandArchived = () => {
-
-  // };
   const closeIconMenu = () => {
     setAnchorEl(null);
   };

@@ -55,7 +55,7 @@ const Home: React.FC = () => {
       </Grid>
 
       <Container>
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
             <Grid container spacing={2} sx={{ marginBottom: '15px' }}>
               <Grid item xs={5} sm={4}>
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Grid item xs={12}>
             <ListErrands GetSearch={stateSearch} getIsArchived={stateIsArchived} />
           </Grid>
         </Grid>

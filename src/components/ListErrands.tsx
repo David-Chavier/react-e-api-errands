@@ -2,10 +2,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
-import { Avatar, ListItemAvatar } from '@mui/material';
-import imgBase from '../images/imgBase.png';
+import { Avatar, Grid, ListItemAvatar } from '@mui/material';
 import { useAppSelector } from '../store/hooks';
 import React, { useState } from 'react';
 
@@ -39,35 +36,26 @@ const ListErrands: React.FC<SearchReceived> = ({ GetSearch, getIsArchived }) => 
         />
       )}
 
-      {selectedNote
-        .filter(item => item.description.includes(GetSearch))
-        .map((value, index) => {
-          const labelId = `checkbox-list-label-${value}`;
-
-          return (
-            <ListItem
-              key={index}
-              secondaryAction={
-                <IconButton
-                  id={index.toString()}
-                  onClick={() => handleOpenDialog(index.toString())}
-                  edge="end"
-                  aria-label="comments"
-                >
-                  <CommentIcon />
-                </IconButton>
-              }
-              disablePadding
-            >
-              <ListItemButton role={undefined} dense>
-                <ListItemAvatar>
-                  <Avatar alt="Avatar n°'/images/imgBase.png'" src="/images/imgBase.png" />
-                </ListItemAvatar>
-                <ListItemText id={labelId} primary={`(${index + 1}) ${value.description}`} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
+      <Grid container spacing={2}>
+        {selectedNote
+          .filter(item => item.description.includes(GetSearch))
+          .map((value, index) => (
+            <Grid item xs={12} md={4} sm={6} key={index}>
+              <ListItem onClick={() => handleOpenDialog(index.toString())} disablePadding sx={{ height: '100px' }}>
+                <ListItemButton sx={{ height: '100px', backgroundColor: 'rgba(153, 204, 50, 0.5)' }}>
+                  <ListItemAvatar>
+                    <Avatar alt="Avatar n°'/images/imgBase.png'" src="/images/imgBase.png" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    sx={{ '& > span': { fontSize: '1.5rem !important', fontWeight: '600 !important' } }}
+                    id={value.errandId}
+                    primary={`: ${value.description.slice(0, 15)}`}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </Grid>
+          ))}
+      </Grid>
     </List>
   );
 };

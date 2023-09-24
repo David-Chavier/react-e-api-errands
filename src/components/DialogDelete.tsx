@@ -49,7 +49,7 @@ export default function DialogDelete(props: StateModalProps) {
           >
             Disagree
           </Button>
-          <Button variant="contained" onClick={saveNote} autoFocus sx={{ backgroundColor: '19e666' }}>
+          <Button variant="contained" onClick={saveNote} autoFocus>
             Agree
           </Button>
         </DialogActions>
