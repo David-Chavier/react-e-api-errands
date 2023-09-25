@@ -33,7 +33,6 @@ export default function DialogDelete(props: StateModalProps) {
     dispatch(deleteErrandAction(errandDelete));
     props.setStateModalDelete(false);
     props.setStateModal(false);
-    console.log('eu certo');
   };
 
   return (

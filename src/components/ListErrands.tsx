@@ -39,13 +39,12 @@ const ListErrands: React.FC<SearchReceived> = ({ GetSearch, getIsArchived }) => 
       <Grid container spacing={2}>
         {selectedNote
           .filter(item => item.description.includes(GetSearch))
-          .reverse()
           .map((value, index) => (
             <Grid item xs={12} md={4} sm={6} key={index}>
-              <ListItem onClick={() => handleOpenDialog(index.toString())} disablePadding sx={{ height: '100px' }}>
-                <ListItemButton sx={{ height: '100px', backgroundColor: 'rgba(153, 204, 50, 0.5)' }}>
-                  <ListItemAvatar>
-                    <Avatar alt="Avatar n°'/images/imgBase.png'" src="/images/imgBase.png" />
+              <ListItem onClick={() => handleOpenDialog(index.toString())} disablePadding>
+                <ListItemButton sx={{ height: '80px', backgroundColor: 'rgba(153, 204, 50, 0.5)' }}>
+                  <ListItemAvatar sx={{ minWidth: '48px' }}>
+                    <Avatar>{1 + index}</Avatar>
                   </ListItemAvatar>
                   <ListItemText
                     sx={{ '& > span': { fontSize: '1.5rem !important', fontWeight: '600 !important' } }}
