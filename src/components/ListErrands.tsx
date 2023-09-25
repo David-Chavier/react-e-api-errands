@@ -39,6 +39,7 @@ const ListErrands: React.FC<SearchReceived> = ({ GetSearch, getIsArchived }) => 
       <Grid container spacing={2}>
         {selectedNote
           .filter(item => item.description.includes(GetSearch))
+          .reverse()
           .map((value, index) => (
             <Grid item xs={12} md={4} sm={6} key={index}>
               <ListItem onClick={() => handleOpenDialog(index.toString())} disablePadding sx={{ height: '100px' }}>
